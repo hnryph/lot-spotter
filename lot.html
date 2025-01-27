@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LotSpotter</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <!-- Box Icons -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+    <!-- Remix Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <!-- Logo -->
+        <a href="index.html" class="logo">
+            <img src="logo.png">
+        </a>
+
+        <!-- Navigation Links -->
+        <ul class="navlist">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="search.html">Services</a></li>
+            <li><a href="help.html">Help</a></li>
+        </ul>
+
+        <!-- Signup & Menu -->
+        <div class="h-right">
+            <a href="contact.html" id="contact-btn">Contact</a>
+            <a href="#" id="signout-btn">Sign Out</a>
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
+    </header>
+
+    <!--- Lot Page Content --->
+	<section class="body-container fade-in">
+        <div class="body-text" style="text-align: center;">
+            <h1>Parking Lot</h1>
+        </div>
+        <!-- Lot Home -->
+        <div class="lot-container">
+            <!-- Parking Lot Model -->
+            <div id="parking-lot">
+                <div class="space" data-space-id="0" data-has-car="false">
+                    <img src="car.png" alt="Car Image" style="display: none;">
+                    <h6 style="display: block;">A1</h6>
+                </div>
+                <div class="space" data-space-id="1" data-has-car="false">
+                    <img src="car.png" alt="Car Image" style="display: none;">
+                    <h6 style="display: block;">A2</h6>
+                </div>
+                <div class="space" data-space-id="2" data-has-car="false">
+                    <img src="car.png" alt="Car Image" style="display: none;">
+                    <h6 style="display: block;">A3</h6>
+                </div>                
+                <div class="space" data-space-id="3" data-has-car="false">
+                    <img src="car.png" alt="Car Image" style="display: none;">
+                    <h6 style="display: block;">A4</h6>
+                </div>
+                <div class="space" data-space-id="4" data-has-car="false">
+                    <img src="car.png" alt="Car Image" style="display: none;">
+                    <h6 style="display: block;">A5</h6>
+                </div>
+                <div class="space" data-space-id="5" data-has-car="false">
+                    <img src="car.png" alt="Car Image" style="display: none;">
+                    <h6 style="display: block;">A6</h6>
+                </div>
+            </div>
+            <!-- Lot Space Info -->
+            <div class="space-info">
+                <div class="info-container">
+                    <div class="selected-info">
+                        <h1 id="selected-space">Selected: <span class="selected-text">A1</span></h1>
+                    </div>
+                    <div class="price-info">
+                        <p>Price: $12.99 per day</p>
+                    </div>
+                </div>
+                <input id="username-field" placeholder="Enter Username"></input>
+                <!-- Reserve Space Button -->
+                <div class="main-btn" id="reserve-btn">
+                    <a href="#" class="btn">Reserve Spot</a>
+                </div>
+            </div>                 
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="social">
+                <!-- socials?? -->
+            </div>
+            <div class="copyright">
+                &copy; 2023 LotSpotter. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Link -->
+    <script src="script.js"></script>
+
+    <!-- Reserve Space Script -->
+    <script src="lot.js" type="module"></script>
+</body>
+</html>

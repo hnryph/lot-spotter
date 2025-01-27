@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LotSpotter</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <!-- Box Icons -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+    <!-- Remix Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <!-- Logo -->
+        <a href="index.html" class="logo">
+            <img src="logo.png">
+        </a>
+
+        <!-- Navigation Links -->
+        <ul class="navlist">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="search.html">Services</a></li>
+            <li><a href="help.html">Help</a></li>
+        </ul>
+
+        <!-- Signup & Menu -->
+        <div class="h-right">
+            <a href="contact.html" id="contact-btn">Contact</a>
+            <a href="#" id="signout-btn">Sign Out</a>
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
+    </header>
+
+    <!--- Search Content --->
+	<section class="body-container fade-in">
+		<div class="body-text">
+			<h1>Enter Destination</h1>
+            <!-- Search input -->
+            <input id="searchTextField" class="controls" type="text" placeholder="Address, Place, City, or Venue"><br><br><br>
+            <!-- Map -->
+            <div id="map" style="height: 500px;"></div>
+		</div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="social">
+                <!-- Socials -->
+            </div>
+            <div class="copyright">
+                &copy; 2023 LotSpotter. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Link -->
+    <script src="script.js"></script>
+
+    <!-- Google Maps API -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsnky6vTpqinLjzCbUkq5NAntpePR9dwY&libraries=places&callback=initMap">
+    </script>
+
+    <!-- Initialization and Autocomplete -->
+    <script>
+        var map;
+        var service;
+        var infowindow;
+
+        function initMap() {
+            var pyrmont = new google.maps.LatLng(33.9526, -84.5499);
+
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: pyrmont,
+                zoom: 15
+            });
+
+            var input = document.getElementById('searchTextField');
+            var autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.bindTo('bounds', map);
+
+            let marker = new google.maps.Marker({
+                map:map
+            })
+
+            infowindow = new google.maps.InfoWindow();
+
+            google.maps.event.addListener(autocomplete,'place_changed',() => {
+                let place = autocomplete.getPlace()
+                console.log(place)
+                console.log(place.photos[0].getUrl())
+
+                if(place.geometry.viewport){
+                    map.fitBounds(place.geometry.viewport)
+                } else {
+                    map.setCenter(place.geometry.location)
+                    map.setZoom(17)
+                }
+                marker.setPosition(place.geometry.location)
+                marker.setVisible(true)
+
+                let request = {
+                    location:place.geometry.location,
+                    radius:'1500',
+                    type:['parking']
+                }
+
+                service = new google.maps.places.PlacesService(map)
+                service.nearbySearch(request,callback)
+            })
+        }
+
+        function callback(results, status) {
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+                for ( var i = 0; i < results.length; i++) {
+                    var place = results[i];
+                    createMarker(results[i]);
+                }
+            }
+        }
+
+        // Create Marker
+        function createMarker(place) {
+            var marker = new google.maps.Marker({
+                map: map,
+                position: place.geometry.location
+            });
+
+            google.maps.event.addListener(marker, 'click', function () {
+                var content = '<div class="infowindow-content">';
+
+                if (place.name) {
+                    content += '<div class="infowindow-title">' + place.name + '</div>';
+                }
+                // Info Window Content
+                content += '<span style="color: var(--bg-color); font-weight: 400;">Available Spaces:</span> 3<br>';
+                content += '<span style="color: var(--bg-color); font-weight: 400;">Price:</span> $12.99 per day<br><br>';
+                content += '<a href="lot.html"><b>Reserve a spot</b></a>';
+
+                content += '</div>';
+                
+                infowindow.setContent(content);
+                infowindow.open(map, this);
+            });
+        }
+    </script>
+</body>
+</html>
